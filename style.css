@@ -1,0 +1,634 @@
+/* 國字學習儀表板 樣式設計 (Hanzi Learning Dashboard Stylesheet) */
+
+/* 基礎設定 */
+:root {
+  --bg-color: #fbfaf5;
+  --card-bg: #ffffff;
+  --text-primary: #2d3748;
+  --text-secondary: #718096;
+  --accent-color: #4f46e5;
+  --accent-light: #e0e7ff;
+  --success-color: #059669;
+  --success-light: #d1fae5;
+  --danger-color: #dc2626;
+  --danger-light: #fee2e2;
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --border-radius: 1.5rem;
+  --font-chinese: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-chinese);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+/* 頂部列與導覽 */
+header {
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 1.5rem;
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  font-size: 1.8rem;
+  color: var(--accent-color);
+  font-weight: 700;
+}
+
+.controls-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* 導覽按鈕群組 */
+.tabs-container {
+  display: flex;
+  background-color: #f3f4f6;
+  padding: 0.25rem;
+  border-radius: 1rem;
+}
+
+.tab-btn {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  background: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+  background-color: var(--card-bg);
+  color: var(--accent-color);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 開關按鈕 (Switch) */
+.switch-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #cbd5e1;
+  transition: .3s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--accent-color);
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+/* 主要學習區域 */
+main {
+  width: 100%;
+  max-width: 900px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* 學習字卡容器 */
+.study-container {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* 圖卡模式中的圖片 */
+.card-image-wrapper {
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 4 / 3;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #f1f5f9;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f8fafc;
+}
+
+.card-image-wrapper:active {
+  transform: scale(0.98);
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 國字考驗模式中的巨大文字 */
+.huge-text-wrapper {
+  width: 100%;
+  height: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  font-size: 16rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.03);
+  transition: transform 0.15s ease;
+}
+
+.huge-text-wrapper:active {
+  transform: scale(0.95);
+}
+
+/* 詞彙按鈕群組 */
+.vocab-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hint-trigger-btn {
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background-color: var(--accent-light);
+  color: var(--accent-color);
+  border: 2px dashed var(--accent-color);
+  border-radius: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.hint-trigger-btn:hover {
+  background-color: #dbeafe;
+}
+
+.vocab-grid {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.vocab-item {
+  position: relative;
+}
+
+.vocab-btn {
+  padding: 0.8rem 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  background-color: #f8fafc;
+  color: var(--text-primary);
+  border: 2px solid #e2e8f0;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.vocab-btn:active {
+  background-color: var(--accent-light);
+  border-color: var(--accent-color);
+  transform: scale(0.95);
+}
+
+.vocab-edit-icon {
+  font-size: 0.85rem;
+  opacity: 0.4;
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 4px;
+}
+
+.vocab-edit-icon:hover {
+  opacity: 1;
+  background-color: #cbd5e1;
+}
+
+/* 底部導覽大按鈕 */
+.navigation-bar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.nav-btn {
+  flex: 1;
+  min-height: 64px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-btn:active {
+  transform: scale(0.96);
+}
+
+.btn-prev {
+  background-color: #e2e8f0;
+  color: var(--text-primary);
+}
+
+.btn-next {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.btn-master {
+  background-color: var(--success-color);
+  color: white;
+  flex: 1.2;
+}
+
+/* 進度條與狀態 */
+.progress-container {
+  width: 100%;
+  background-color: #edf2f7;
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-color), #818cf8);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: right;
+}
+
+/* 字卡牆 (Dashboard Mode) */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.grid-item {
+  aspect-ratio: 1;
+  border-radius: 1rem;
+  border: 2px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #f8fafc;
+  position: relative;
+  overflow: hidden;
+  padding: 0.5rem;
+}
+
+.grid-item:active {
+  transform: scale(0.95);
+}
+
+.grid-char {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.grid-status {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+  color: var(--text-secondary);
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.25rem;
+  background-color: #cbd5e1;
+}
+
+/* 已學會字卡樣式 */
+.grid-item.mastered {
+  border-color: #86efac;
+  background-color: #f0fdf4;
+}
+
+.grid-item.mastered .grid-char {
+  color: var(--success-color);
+  opacity: 0.6;
+}
+
+.grid-item.mastered .grid-status {
+  background-color: var(--success-light);
+  color: var(--success-color);
+}
+
+/* 浮動統計面板 */
+.stats-summary {
+  display: flex;
+  justify-content: space-around;
+  background-color: #f8fafc;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 1rem;
+}
+
+.stat-box {
+  text-align: center;
+}
+
+.stat-val {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent-color);
+}
+
+.stat-lbl {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  margin-top: 0.2rem;
+}
+
+/* 大彈窗 (Modal) 用於編輯詞彙與操作 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  padding: 1.5rem;
+}
+
+.modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 460px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  transform: translateY(20px);
+  transition: transform 0.2s ease;
+}
+
+.modal.open .modal-content {
+  transform: translateY(0);
+}
+
+.modal-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.edit-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.edit-input-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.edit-input {
+  padding: 0.8rem;
+  font-size: 1.1rem;
+  border: 2px solid #cbd5e1;
+  border-radius: 0.75rem;
+  width: 100%;
+  font-family: var(--font-chinese);
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.modal-footer {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.modal-btn {
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.modal-btn-cancel {
+  background-color: #cbd5e1;
+  color: var(--text-primary);
+}
+
+.modal-btn-save {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+/* 滿分慶祝 / 無字卡顯示 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1.5rem;
+  padding: 3rem 1.5rem;
+}
+
+.empty-icon {
+  font-size: 4rem;
+}
+
+.empty-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.empty-desc {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 400px;
+}
+
+.btn-reset {
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+/* 響應式微調 */
+@media (max-width: 600px) {
+  body {
+    padding: 0.8rem;
+  }
+  
+  header, main {
+    gap: 1rem;
+  }
+  
+  .study-container {
+    padding: 1.2rem;
+    gap: 1.5rem;
+  }
+  
+  .huge-text-wrapper {
+    height: 240px;
+    font-size: 10rem;
+  }
+  
+  .vocab-btn {
+    font-size: 1.1rem;
+    padding: 0.6rem 1.2rem;
+  }
+  
+  .nav-btn {
+    min-height: 56px;
+    font-size: 1.05rem;
+  }
+}

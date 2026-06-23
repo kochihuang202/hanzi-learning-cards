@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>國字學習儀表板 - 幼兒認字互動卡</title>
+  <meta name="description" content="專為兒童設計的互動認字學習工具，支援圖卡學習與國字考驗模式，提供自訂詞彙與點讀語音。">
+  
+  <!-- 引入 Google Fonts (Noto Sans TC) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  
+  <!-- 引入自訂樣式 -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 頂部導覽列 -->
+  <header>
+    <div class="header-top">
+      <h1>🎈 國字認字卡</h1>
+      
+      <!-- 進度條與狀態 -->
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.2rem;">
+        <div id="progress-text" class="progress-text">載入中...</div>
+      </div>
+    </div>
+    
+    <div class="progress-container">
+      <div id="progress-bar" class="progress-bar"></div>
+    </div>
+
+    <div class="controls-row">
+      <!-- 模式切換 -->
+      <div class="tabs-container">
+        <button class="tab-btn active" data-mode="card" id="tab-card">📖 圖卡學習</button>
+        <button class="tab-btn" data-mode="text" id="tab-text">✍ 國字考驗</button>
+        <button class="tab-btn" data-mode="dashboard" id="tab-dashboard">⚙ 進度管理</button>
+      </div>
+
+      <!-- 隨機洗牌開關 -->
+      <div class="switch-container">
+        <span>🎲 隨機洗牌</span>
+        <label class="switch">
+          <input type="checkbox" id="shuffle-toggle">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主要內容呈現區（由 app.js 動態渲染） -->
+  <main id="main-content">
+    <div style="text-align: center; padding: 3rem; font-size: 1.2rem; color: var(--text-secondary);">
+      🔄 正在載入學習字卡...
+    </div>
+  </main>
+
+  <!-- 編輯詞彙大彈窗 (Modal) -->
+  <div id="edit-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-title">✏️ 編輯「<span id="modal-title-char"></span>」的關聯詞彙</div>
+      <div class="modal-body">
+        <div class="edit-input-group">
+          <label for="vocab-input-0">詞彙一</label>
+          <input type="text" id="vocab-input-0" class="edit-input" placeholder="例如：太陽" maxlength="6">
+        </div>
+        <div class="edit-input-group">
+          <label for="vocab-input-1">詞彙二</label>
+          <input type="text" id="vocab-input-1" class="edit-input" placeholder="例如：生日" maxlength="6">
+        </div>
+        <div class="edit-input-group">
+          <label for="vocab-input-2">詞彙三</label>
+          <input type="text" id="vocab-input-2" class="edit-input" placeholder="例如：假日" maxlength="6">
+        </div>
+        <div class="edit-input-group">
+          <label for="vocab-input-3">詞彙四</label>
+          <input type="text" id="vocab-input-3" class="edit-input" placeholder="例如：日子" maxlength="6">
+        </div>
+        <div class="edit-input-group">
+          <label for="vocab-input-4">詞彙五</label>
+          <input type="text" id="vocab-input-4" class="edit-input" placeholder="例如：日曆" maxlength="6">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-modal-cancel" class="modal-btn modal-btn-cancel">取消</button>
+        <button id="btn-modal-save" class="modal-btn modal-btn-save">儲存修改</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 載入資料與邏輯腳本 -->
+  <script src="cards_data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
