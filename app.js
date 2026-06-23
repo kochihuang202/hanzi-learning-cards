@@ -9,6 +9,7 @@ let state = {
   isShuffled: false,    // 是否隨機洗牌
   masteredCards: new Set(), // 已學會的國字集合 (存於 localStorage)
   customVocab: {},      // 自訂詞彙對照表 { "日": ["詞1", "詞2", ...] } (存於 localStorage)
+  selectedVoiceName: "", // 使用者手動選擇的語音名稱 (存於 localStorage)
   
   // 編輯詞彙暫存
   editingChar: null
@@ -64,6 +65,9 @@ function loadProgress() {
     }
   }
 
+  // 讀取使用者選取的語音
+  state.selectedVoiceName = localStorage.getItem("hanzi_selected_voice") || "";
+
   // 讀取洗牌設定
   const shuffled = localStorage.getItem("hanzi_shuffled");
   state.isShuffled = shuffled === "true";
@@ -82,6 +86,7 @@ function saveProgress() {
   localStorage.setItem("hanzi_custom_vocab", JSON.stringify(state.customVocab));
   localStorage.setItem("hanzi_shuffled", state.isShuffled ? "true" : "false");
   localStorage.setItem("hanzi_mode", state.currentMode);
+  localStorage.setItem("hanzi_selected_voice", state.selectedVoiceName);
 }
 
 // 重建學習佇列
@@ -115,6 +120,23 @@ function setupEventListeners() {
       switchMode(mode);
     });
   });
+
+  // 語音選擇器變更監聽
+  const voiceSelect = document.getElementById("voice-select");
+  if (voiceSelect) {
+    voiceSelect.addEventListener("change", (e) => {
+      state.selectedVoiceName = e.target.value;
+      saveProgress();
+    });
+  }
+
+  // Web Speech API 語音清單變更監聽 (解決非同步載入問題)
+  if (typeof window.speechSynthesis !== "undefined") {
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+      window.speechSynthesis.onvoiceschanged = populateVoices;
+    }
+    populateVoices();
+  }
 
   // 隨機洗牌切換
   document.getElementById("shuffle-toggle").addEventListener("change", (e) => {
@@ -150,6 +172,67 @@ function setupEventListeners() {
   });
 }
 
+// 填充可用的中文語音選單
+function populateVoices() {
+  const voiceSelect = document.getElementById("voice-select");
+  if (!voiceSelect) return;
+
+  const voices = window.speechSynthesis.getVoices();
+
+  // 篩選出中文語音 (zh-TW, zh-HK, zh-CN, cmn, chi)
+  let zhVoices = voices.filter(voice => 
+    voice.lang.toLowerCase().includes("zh") || 
+    voice.lang.toLowerCase().includes("cmn") || 
+    voice.lang.toLowerCase().includes("chi") ||
+    voice.name.includes("Chinese") ||
+    voice.name.includes("Google 國語")
+  );
+
+  // 若沒找到中文語音，後備列出所有語音
+  if (zhVoices.length === 0) {
+    zhVoices = voices;
+  }
+
+  // 排序：將台灣(zh-TW)放在最上方
+  zhVoices.sort((a, b) => {
+    const aTW = a.lang.toLowerCase().includes("zh-tw");
+    const bTW = b.lang.toLowerCase().includes("zh-tw");
+    if (aTW && !bTW) return -1;
+    if (!aTW && bTW) return 1;
+    return 0;
+  });
+
+  voiceSelect.innerHTML = "";
+
+  // 系統預設語音選項
+  const defaultOpt = document.createElement("option");
+  defaultOpt.value = "";
+  defaultOpt.textContent = "系統預設 (Taiwan)";
+  voiceSelect.appendChild(defaultOpt);
+
+  zhVoices.forEach(voice => {
+    const option = document.createElement("option");
+    option.value = voice.name;
+
+    let displayName = voice.name;
+    if (voice.lang.toLowerCase().includes("zh-tw")) {
+      displayName = "🇹🇼 " + displayName;
+    } else if (voice.lang.toLowerCase().includes("zh-hk")) {
+      displayName = "🇭🇰 " + displayName;
+    } else if (voice.lang.toLowerCase().includes("zh-cn")) {
+      displayName = "🇨🇳 " + displayName;
+    }
+
+    option.textContent = displayName;
+
+    if (state.selectedVoiceName === voice.name) {
+      option.selected = true;
+    }
+    
+    voiceSelect.appendChild(option);
+  });
+}
+
 // 取得目前正在讀的卡片
 function getActiveCard() {
   if (state.activeQueue.length > 0 && state.currentIndex < state.activeQueue.length) {
@@ -176,19 +259,28 @@ function speakText(text) {
   window.speechSynthesis.cancel();
   
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "zh-TW"; // 台灣國語
+  utterance.lang = "zh-TW"; // 預設語言
   utterance.rate = 0.8;    // 慢速，對幼兒更清晰
   
-  // 尋找台灣本地語音（部分瀏覽器/系統支援）
   const voices = window.speechSynthesis.getVoices();
-  const twVoice = voices.find(voice => 
-    voice.lang.includes("zh-TW") || 
-    voice.name.includes("Taiwan") || 
-    voice.name.includes("Mei-Jia") || 
-    voice.name.includes("Yating")
-  );
-  if (twVoice) {
-    utterance.voice = twVoice;
+  
+  if (state.selectedVoiceName) {
+    const selectedVoice = voices.find(voice => voice.name === state.selectedVoiceName);
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
+      utterance.lang = selectedVoice.lang;
+    }
+  } else {
+    // 預設尋找台灣本地語音
+    const twVoice = voices.find(voice => 
+      voice.lang.includes("zh-TW") || 
+      voice.name.includes("Taiwan") || 
+      voice.name.includes("Mei-Jia") || 
+      voice.name.includes("Yating")
+    );
+    if (twVoice) {
+      utterance.voice = twVoice;
+    }
   }
   
   window.speechSynthesis.speak(utterance);
