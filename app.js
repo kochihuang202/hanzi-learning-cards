@@ -10,6 +10,7 @@ let state = {
   masteredCards: new Set(), // 已學會的國字集合 (存於 localStorage)
   customVocab: {},      // 自訂詞彙對照表 { "日": ["詞1", "詞2", ...] } (存於 localStorage)
   selectedVoiceName: "", // 使用者手動選擇的語音名稱 (存於 localStorage)
+  isEnlarged: false,    // 是否手動放大圖卡尺寸 (存於 localStorage)
   
   // 編輯詞彙暫存
   editingChar: null
@@ -68,6 +69,9 @@ function loadProgress() {
   // 讀取使用者選取的語音
   state.selectedVoiceName = localStorage.getItem("hanzi_selected_voice") || "";
 
+  // 讀取圖卡放大設定
+  state.isEnlarged = localStorage.getItem("hanzi_is_enlarged") === "true";
+
   // 讀取洗牌設定
   const shuffled = localStorage.getItem("hanzi_shuffled");
   state.isShuffled = shuffled === "true";
@@ -87,6 +91,7 @@ function saveProgress() {
   localStorage.setItem("hanzi_shuffled", state.isShuffled ? "true" : "false");
   localStorage.setItem("hanzi_mode", state.currentMode);
   localStorage.setItem("hanzi_selected_voice", state.selectedVoiceName);
+  localStorage.setItem("hanzi_is_enlarged", state.isEnlarged ? "true" : "false");
 }
 
 // 重建學習佇列
@@ -286,15 +291,23 @@ function speakText(text) {
       utterance.lang = selectedVoice.lang;
     }
   } else {
-    // 預設尋找台灣本地語音
-    const twVoice = voices.find(voice => 
-      voice.lang.includes("zh-TW") || 
-      voice.name.includes("Taiwan") || 
-      voice.name.includes("Mei-Jia") || 
-      voice.name.includes("Yating")
+    // 預設尋找台灣本地語音，優先選擇微軟的「雲哲」發音，其次為其他語音
+    let defaultVoice = voices.find(voice => 
+      voice.name.includes("雲哲") || 
+      voice.name.includes("Yunjhe")
     );
-    if (twVoice) {
-      utterance.voice = twVoice;
+    
+    if (!defaultVoice) {
+      defaultVoice = voices.find(voice => 
+        voice.lang.includes("zh-TW") || 
+        voice.name.includes("Taiwan") || 
+        voice.name.includes("Mei-Jia") || 
+        voice.name.includes("Yating")
+      );
+    }
+    
+    if (defaultVoice) {
+      utterance.voice = defaultVoice;
     }
   }
   
@@ -427,7 +440,7 @@ function render() {
   if (state.currentMode === 'card') {
     // 1. 圖卡學習模式
     const imgWrapper = document.createElement("div");
-    imgWrapper.className = "card-image-wrapper";
+    imgWrapper.className = `card-image-wrapper ${state.isEnlarged ? 'enlarged' : ''}`;
     
     // 點圖片發音國字
     imgWrapper.addEventListener("click", () => speakText(card.char));
@@ -443,6 +456,27 @@ function render() {
     };
     
     imgWrapper.appendChild(img);
+
+    // 建立浮動放大/縮小按鈕
+    const zoomBtn = document.createElement("button");
+    zoomBtn.className = "zoom-btn";
+    zoomBtn.innerHTML = state.isEnlarged ? "🔍 縮小" : "🔍 放大";
+    zoomBtn.addEventListener("click", (e) => {
+      e.stopPropagation(); // 阻止發音
+      state.isEnlarged = !state.isEnlarged;
+      saveProgress();
+      
+      // 切換縮放 class 與按鈕文字
+      if (state.isEnlarged) {
+        imgWrapper.classList.add("enlarged");
+        zoomBtn.innerHTML = "🔍 縮小";
+      } else {
+        imgWrapper.classList.remove("enlarged");
+        zoomBtn.innerHTML = "🔍 放大";
+      }
+    });
+    imgWrapper.appendChild(zoomBtn);
+    
     studyContainer.appendChild(imgWrapper);
     
     // 顯示 5 組詞彙
