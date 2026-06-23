@@ -132,10 +132,12 @@ function setupEventListeners() {
 
   // Web Speech API 語音清單變更監聽 (解決非同步載入問題)
   if (typeof window.speechSynthesis !== "undefined") {
-    if (window.speechSynthesis.onvoiceschanged !== undefined) {
-      window.speechSynthesis.onvoiceschanged = populateVoices;
-    }
+    window.speechSynthesis.addEventListener("voiceschanged", populateVoices);
     populateVoices();
+    // 解決部分瀏覽器（如 Chrome/Windows）getVoices 延遲載入問題，排程多次執行
+    setTimeout(populateVoices, 100);
+    setTimeout(populateVoices, 500);
+    setTimeout(populateVoices, 1000);
   }
 
   // 隨機洗牌切換
@@ -174,63 +176,76 @@ function setupEventListeners() {
 
 // 填充可用的中文語音選單
 function populateVoices() {
-  const voiceSelect = document.getElementById("voice-select");
-  if (!voiceSelect) return;
+  try {
+    const voiceSelect = document.getElementById("voice-select");
+    if (!voiceSelect) return;
 
-  const voices = window.speechSynthesis.getVoices();
-
-  // 篩選出中文語音 (zh-TW, zh-HK, zh-CN, cmn, chi)
-  let zhVoices = voices.filter(voice => 
-    voice.lang.toLowerCase().includes("zh") || 
-    voice.lang.toLowerCase().includes("cmn") || 
-    voice.lang.toLowerCase().includes("chi") ||
-    voice.name.includes("Chinese") ||
-    voice.name.includes("Google 國語")
-  );
-
-  // 若沒找到中文語音，後備列出所有語音
-  if (zhVoices.length === 0) {
-    zhVoices = voices;
-  }
-
-  // 排序：將台灣(zh-TW)放在最上方
-  zhVoices.sort((a, b) => {
-    const aTW = a.lang.toLowerCase().includes("zh-tw");
-    const bTW = b.lang.toLowerCase().includes("zh-tw");
-    if (aTW && !bTW) return -1;
-    if (!aTW && bTW) return 1;
-    return 0;
-  });
-
-  voiceSelect.innerHTML = "";
-
-  // 系統預設語音選項
-  const defaultOpt = document.createElement("option");
-  defaultOpt.value = "";
-  defaultOpt.textContent = "系統預設 (Taiwan)";
-  voiceSelect.appendChild(defaultOpt);
-
-  zhVoices.forEach(voice => {
-    const option = document.createElement("option");
-    option.value = voice.name;
-
-    let displayName = voice.name;
-    if (voice.lang.toLowerCase().includes("zh-tw")) {
-      displayName = "🇹🇼 " + displayName;
-    } else if (voice.lang.toLowerCase().includes("zh-hk")) {
-      displayName = "🇭🇰 " + displayName;
-    } else if (voice.lang.toLowerCase().includes("zh-cn")) {
-      displayName = "🇨🇳 " + displayName;
-    }
-
-    option.textContent = displayName;
-
-    if (state.selectedVoiceName === voice.name) {
-      option.selected = true;
-    }
+    const voices = window.speechSynthesis.getVoices();
     
-    voiceSelect.appendChild(option);
-  });
+    // 若瀏覽器尚未備妥語音清單，暫時顯示載入中
+    if (!voices || voices.length === 0) {
+      voiceSelect.innerHTML = '<option value="">載入語音中...</option>';
+      return;
+    }
+
+    // 篩選出中文語音 (zh-TW, zh-HK, zh-CN, cmn, chi)
+    let zhVoices = voices.filter(voice => {
+      if (!voice) return false;
+      const lang = (voice.lang || "").toLowerCase();
+      const name = (voice.name || "").toLowerCase();
+      return lang.includes("zh") || lang.includes("cmn") || lang.includes("chi") || name.includes("chinese") || name.includes("國語");
+    });
+
+    // 若沒找到任何中文語音，後備列出所有語音，避免下拉選單空白
+    if (zhVoices.length === 0) {
+      zhVoices = voices;
+    }
+
+    // 排序：將台灣(zh-TW)放在最上方
+    zhVoices.sort((a, b) => {
+      const aLang = (a.lang || "").toLowerCase();
+      const bLang = (b.lang || "").toLowerCase();
+      const aTW = aLang.includes("zh-tw");
+      const bTW = bLang.includes("zh-tw");
+      if (aTW && !bTW) return -1;
+      if (!aTW && bTW) return 1;
+      return 0;
+    });
+
+    voiceSelect.innerHTML = "";
+
+    // 系統預設語音選項
+    const defaultOpt = document.createElement("option");
+    defaultOpt.value = "";
+    defaultOpt.textContent = "系統預設 (Taiwan)";
+    voiceSelect.appendChild(defaultOpt);
+
+    zhVoices.forEach(voice => {
+      if (!voice) return;
+      const option = document.createElement("option");
+      option.value = voice.name;
+
+      let displayName = voice.name || "未命名語音";
+      const lang = (voice.lang || "").toLowerCase();
+      if (lang.includes("zh-tw")) {
+        displayName = "🇹🇼 " + displayName;
+      } else if (lang.includes("zh-hk")) {
+        displayName = "🇭🇰 " + displayName;
+      } else if (lang.includes("zh-cn")) {
+        displayName = "🇨🇳 " + displayName;
+      }
+
+      option.textContent = displayName;
+
+      if (state.selectedVoiceName === voice.name) {
+        option.selected = true;
+      }
+      
+      voiceSelect.appendChild(option);
+    });
+  } catch (error) {
+    console.error("載入語音選單時發生錯誤：", error);
+  }
 }
 
 // 取得目前正在讀的卡片
