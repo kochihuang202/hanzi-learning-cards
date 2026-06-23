@@ -10,7 +10,7 @@ let state = {
   masteredCards: new Set(), // 已學會的國字集合 (存於 localStorage)
   customVocab: {},      // 自訂詞彙對照表 { "日": ["詞1", "詞2", ...] } (存於 localStorage)
   selectedVoiceName: "", // 使用者手動選擇的語音名稱 (存於 localStorage)
-  zoomScale: 1.0,       // 圖卡縮放倍率 (存於 localStorage, 預設 1.0)
+  zoomScale: 1.5,       // 圖卡縮放倍率 (存於 localStorage, 預設 1.5)
   
   // 編輯詞彙暫存
   editingChar: null
@@ -71,7 +71,7 @@ function loadProgress() {
 
   // 讀取圖卡縮放倍率
   const zoom = localStorage.getItem("hanzi_zoom_scale");
-  state.zoomScale = zoom ? parseFloat(zoom) : 1.0;
+  state.zoomScale = zoom ? parseFloat(zoom) : 1.5;
 
   // 讀取洗牌設定
   const shuffled = localStorage.getItem("hanzi_shuffled");
@@ -513,7 +513,9 @@ function render() {
     zoomControls.appendChild(minusBtn);
     zoomControls.appendChild(scaleText);
     zoomControls.appendChild(plusBtn);
-    imgWrapper.appendChild(zoomControls);
+    
+    // 將縮放控制面板加到外層白底容器 (studyContainer) 的右上角
+    studyContainer.appendChild(zoomControls);
     
     studyContainer.appendChild(imgWrapper);
     
