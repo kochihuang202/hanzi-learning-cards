@@ -174,35 +174,26 @@ main {
   gap: 2rem;
   position: relative;
   transition: all 0.3s ease;
+  max-width: 100%;
+  overflow: auto; /* 若放大超過螢幕，允許滾動瀏覽 */
 }
 
 /* 圖卡模式中的圖片 */
 .card-image-wrapper {
   width: 100%;
-  max-width: 640px;  /* 預設標準寬度 */
-  height: 45vh;      /* 預設標準高度 */
+  max-width: calc(640px * var(--zoom-scale, 1));
+  height: calc(45vh * var(--zoom-scale, 1));
   border-radius: 1rem;
   overflow: hidden;
   box-shadow: var(--shadow-sm);
   border: 1px solid #f1f5f9;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* 平滑縮放過渡動畫 */
+  transition: max-width 0.2s ease, height 0.2s ease; /* 縮放時平滑過渡 */
   display: flex;
   justify-content: center;
   align-items: center;
   background: #f8fafc;
-  position: relative; /* 供放大縮小按鈕絕對定位 */
-}
-
-/* 手動放大後的字卡大小 */
-.card-image-wrapper.enlarged {
-  max-width: 1100px;
-  height: 72vh;
-}
-
-.card-image-wrapper:active {
-  /* 當點擊時，微小縮放回饋（僅在非放大狀態下作用） */
-  transform: scale(0.99);
+  position: relative; /* 供縮放按鈕面板絕對定位 */
 }
 
 .card-image {
@@ -211,36 +202,57 @@ main {
   object-fit: contain;
 }
 
-/* 浮動放大/縮小按鈕 */
-.zoom-btn {
+/* 縮放控制面板 */
+.zoom-controls {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  padding: 0.5rem 1rem;
-  font-size: 0.95rem;
-  font-weight: 700;
-  border-radius: 2rem;
-  background-color: rgba(255, 255, 255, 0.92);
-  color: var(--text-primary);
-  border: 2px solid #e2e8f0;
-  cursor: pointer;
-  box-shadow: var(--shadow-md);
   display: flex;
   align-items: center;
-  gap: 0.3rem;
-  transition: all 0.2s ease;
+  gap: 0.2rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 2px solid #e2e8f0;
+  border-radius: 2rem;
+  padding: 0.2rem 0.4rem;
+  box-shadow: var(--shadow-md);
   z-index: 10;
+}
+
+.zoom-ctrl-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: none;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  transition: all 0.15s ease;
   font-family: var(--font-chinese);
 }
 
-.zoom-btn:hover {
-  background-color: #ffffff;
-  border-color: var(--accent-color);
+.zoom-ctrl-btn:hover {
+  background-color: var(--accent-light);
   color: var(--accent-color);
 }
 
-.zoom-btn:active {
-  transform: scale(0.9);
+.zoom-ctrl-btn:active {
+  transform: scale(0.85);
+}
+
+.zoom-text {
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0 0.4rem;
+  color: var(--text-secondary);
+  user-select: none;
+  min-width: 54px;
+  text-align: center;
+  font-family: var(--font-chinese);
 }
 
 /* 國字考驗模式中的巨大文字 */

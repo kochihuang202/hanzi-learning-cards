@@ -10,7 +10,7 @@ let state = {
   masteredCards: new Set(), // 已學會的國字集合 (存於 localStorage)
   customVocab: {},      // 自訂詞彙對照表 { "日": ["詞1", "詞2", ...] } (存於 localStorage)
   selectedVoiceName: "", // 使用者手動選擇的語音名稱 (存於 localStorage)
-  isEnlarged: false,    // 是否手動放大圖卡尺寸 (存於 localStorage)
+  zoomScale: 1.0,       // 圖卡縮放倍率 (存於 localStorage, 預設 1.0)
   
   // 編輯詞彙暫存
   editingChar: null
@@ -69,8 +69,9 @@ function loadProgress() {
   // 讀取使用者選取的語音
   state.selectedVoiceName = localStorage.getItem("hanzi_selected_voice") || "";
 
-  // 讀取圖卡放大設定
-  state.isEnlarged = localStorage.getItem("hanzi_is_enlarged") === "true";
+  // 讀取圖卡縮放倍率
+  const zoom = localStorage.getItem("hanzi_zoom_scale");
+  state.zoomScale = zoom ? parseFloat(zoom) : 1.0;
 
   // 讀取洗牌設定
   const shuffled = localStorage.getItem("hanzi_shuffled");
@@ -91,7 +92,7 @@ function saveProgress() {
   localStorage.setItem("hanzi_shuffled", state.isShuffled ? "true" : "false");
   localStorage.setItem("hanzi_mode", state.currentMode);
   localStorage.setItem("hanzi_selected_voice", state.selectedVoiceName);
-  localStorage.setItem("hanzi_is_enlarged", state.isEnlarged ? "true" : "false");
+  localStorage.setItem("hanzi_zoom_scale", state.zoomScale.toString());
 }
 
 // 重建學習佇列
@@ -440,7 +441,10 @@ function render() {
   if (state.currentMode === 'card') {
     // 1. 圖卡學習模式
     const imgWrapper = document.createElement("div");
-    imgWrapper.className = `card-image-wrapper ${state.isEnlarged ? 'enlarged' : ''}`;
+    imgWrapper.className = "card-image-wrapper";
+    
+    // 載入時直接套用縮放倍率 CSS 變數
+    imgWrapper.style.setProperty('--zoom-scale', state.zoomScale);
     
     // 點圖片發音國字
     imgWrapper.addEventListener("click", () => speakText(card.char));
@@ -457,25 +461,59 @@ function render() {
     
     imgWrapper.appendChild(img);
 
-    // 建立浮動放大/縮小按鈕
-    const zoomBtn = document.createElement("button");
-    zoomBtn.className = "zoom-btn";
-    zoomBtn.innerHTML = state.isEnlarged ? "🔍 縮小" : "🔍 放大";
-    zoomBtn.addEventListener("click", (e) => {
+    // 建立縮放控制面板 (➖, 百分比/重設, ➕)
+    const zoomControls = document.createElement("div");
+    zoomControls.className = "zoom-controls";
+
+    // ➖ 縮小按鈕
+    const minusBtn = document.createElement("button");
+    minusBtn.className = "zoom-ctrl-btn";
+    minusBtn.innerHTML = "➖";
+    minusBtn.title = "縮小圖片";
+    minusBtn.addEventListener("click", (e) => {
       e.stopPropagation(); // 阻止發音
-      state.isEnlarged = !state.isEnlarged;
-      saveProgress();
-      
-      // 切換縮放 class 與按鈕文字
-      if (state.isEnlarged) {
-        imgWrapper.classList.add("enlarged");
-        zoomBtn.innerHTML = "🔍 縮小";
-      } else {
-        imgWrapper.classList.remove("enlarged");
-        zoomBtn.innerHTML = "🔍 放大";
+      if (state.zoomScale > 0.4) {
+        state.zoomScale = Math.round((state.zoomScale - 0.1) * 10) / 10;
+        saveProgress();
+        updateZoomUI();
       }
     });
-    imgWrapper.appendChild(zoomBtn);
+
+    // 顯示縮放比例 (點擊重設為 100%)
+    const scaleText = document.createElement("div");
+    scaleText.className = "zoom-text";
+    scaleText.textContent = `${Math.round(state.zoomScale * 100)}%`;
+    scaleText.title = "點擊重設回 100%";
+    scaleText.style.cursor = "pointer";
+    scaleText.addEventListener("click", (e) => {
+      e.stopPropagation();
+      state.zoomScale = 1.0;
+      saveProgress();
+      updateZoomUI();
+    });
+
+    // ➕ 放大按鈕 (不設上限)
+    const plusBtn = document.createElement("button");
+    plusBtn.className = "zoom-ctrl-btn";
+    plusBtn.innerHTML = "➕";
+    plusBtn.title = "放大圖片";
+    plusBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      state.zoomScale = Math.round((state.zoomScale + 0.1) * 10) / 10;
+      saveProgress();
+      updateZoomUI();
+    });
+
+    // 更新縮放 UI
+    function updateZoomUI() {
+      imgWrapper.style.setProperty('--zoom-scale', state.zoomScale);
+      scaleText.textContent = `${Math.round(state.zoomScale * 100)}%`;
+    }
+
+    zoomControls.appendChild(minusBtn);
+    zoomControls.appendChild(scaleText);
+    zoomControls.appendChild(plusBtn);
+    imgWrapper.appendChild(zoomControls);
     
     studyContainer.appendChild(imgWrapper);
     
