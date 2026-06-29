@@ -1305,7 +1305,7 @@ const CARDS_DATA = [
     "id": 101,
     "char": "占",
     "fileName": "101_占.webp",
-    "filePath": "國字認字卡/101-200/101_占.webp",
+    "filePath": "國字認字卡/101-150/101_占.webp",
     "vocab": [
       "占領",
       "占有",
@@ -1318,7 +1318,7 @@ const CARDS_DATA = [
     "id": 102,
     "char": "站",
     "fileName": "102_站.webp",
-    "filePath": "國字認字卡/101-200/102_站.webp",
+    "filePath": "國字認字卡/101-150/102_站.webp",
     "vocab": [
       "車站",
       "站立",
@@ -1331,7 +1331,7 @@ const CARDS_DATA = [
     "id": 103,
     "char": "位",
     "fileName": "103_位.webp",
-    "filePath": "國字認字卡/101-200/103_位.webp",
+    "filePath": "國字認字卡/101-150/103_位.webp",
     "vocab": [
       "座位",
       "位置",
@@ -1344,7 +1344,7 @@ const CARDS_DATA = [
     "id": 104,
     "char": "民",
     "fileName": "104_民.webp",
-    "filePath": "國字認字卡/101-200/104_民.webp",
+    "filePath": "國字認字卡/101-150/104_民.webp",
     "vocab": [
       "民眾",
       "人民",
@@ -1357,7 +1357,7 @@ const CARDS_DATA = [
     "id": 105,
     "char": "眠",
     "fileName": "105_眠.webp",
-    "filePath": "國字認字卡/101-200/105_眠.webp",
+    "filePath": "國字認字卡/101-150/105_眠.webp",
     "vocab": [
       "睡眠",
       "冬眠",
@@ -1370,7 +1370,7 @@ const CARDS_DATA = [
     "id": 106,
     "char": "分",
     "fileName": "106_分.webp",
-    "filePath": "國字認字卡/101-200/106_分.webp",
+    "filePath": "國字認字卡/101-150/106_分.webp",
     "vocab": [
       "分享",
       "分數",
@@ -1383,7 +1383,7 @@ const CARDS_DATA = [
     "id": 107,
     "char": "盼",
     "fileName": "107_盼.webp",
-    "filePath": "國字認字卡/101-200/107_盼.webp",
+    "filePath": "國字認字卡/101-150/107_盼.webp",
     "vocab": [
       "盼望",
       "期盼",
@@ -1396,7 +1396,7 @@ const CARDS_DATA = [
     "id": 108,
     "char": "公",
     "fileName": "108_公.webp",
-    "filePath": "國字認字卡/101-200/108_公.webp",
+    "filePath": "國字認字卡/101-150/108_公.webp",
     "vocab": [
       "公園",
       "公車",
@@ -1409,7 +1409,7 @@ const CARDS_DATA = [
     "id": 109,
     "char": "少",
     "fileName": "109_少.webp",
-    "filePath": "國字認字卡/101-200/109_少.webp",
+    "filePath": "國字認字卡/101-150/109_少.webp",
     "vocab": [
       "多少",
       "稀少",
@@ -1422,7 +1422,7 @@ const CARDS_DATA = [
     "id": 110,
     "char": "其",
     "fileName": "110_其.webp",
-    "filePath": "國字認字卡/101-200/110_其.webp",
+    "filePath": "國字認字卡/101-150/110_其.webp",
     "vocab": [
       "其他",
       "其實",
@@ -1435,7 +1435,7 @@ const CARDS_DATA = [
     "id": 111,
     "char": "省",
     "fileName": "111_省.webp",
-    "filePath": "國字認字卡/101-200/111_省.webp",
+    "filePath": "國字認字卡/101-150/111_省.webp",
     "vocab": [
       "省錢",
       "節省",
@@ -1448,7 +1448,7 @@ const CARDS_DATA = [
     "id": 112,
     "char": "期",
     "fileName": "112_期.webp",
-    "filePath": "國字認字卡/101-200/112_期.webp",
+    "filePath": "國字認字卡/101-150/112_期.webp",
     "vocab": [
       "期待",
       "星期",
@@ -1461,7 +1461,7 @@ const CARDS_DATA = [
     "id": 113,
     "char": "也",
     "fileName": "113_也.webp",
-    "filePath": "國字認字卡/101-200/113_也.webp",
+    "filePath": "國字認字卡/101-150/113_也.webp",
     "vocab": [
       "這是",
       "我也要",
@@ -1474,7 +1474,7 @@ const CARDS_DATA = [
     "id": 114,
     "char": "地",
     "fileName": "114_地.webp",
-    "filePath": "國字認字卡/101-200/114_地.webp",
+    "filePath": "國字認字卡/101-150/114_地.webp",
     "vocab": [
       "土地",
       "地球",
@@ -1487,7 +1487,7 @@ const CARDS_DATA = [
     "id": 115,
     "char": "他",
     "fileName": "115_他.webp",
-    "filePath": "國字認字卡/101-200/115_他.webp",
+    "filePath": "國字認字卡/101-150/115_他.webp",
     "vocab": [
       "他們",
       "他的",
@@ -1500,7 +1500,7 @@ const CARDS_DATA = [
     "id": 116,
     "char": "它",
     "fileName": "116_它.webp",
-    "filePath": "國字認字卡/101-200/116_它.webp",
+    "filePath": "國字認字卡/101-150/116_它.webp",
     "vocab": [
       "它的",
       "它們",
@@ -1513,7 +1513,7 @@ const CARDS_DATA = [
     "id": 117,
     "char": "蛇",
     "fileName": "117_蛇.webp",
-    "filePath": "國字認字卡/101-200/117_蛇.webp",
+    "filePath": "國字認字卡/101-150/117_蛇.webp",
     "vocab": [
       "青蛇",
       "眼鏡蛇",
@@ -1526,7 +1526,7 @@ const CARDS_DATA = [
     "id": 118,
     "char": "享",
     "fileName": "118_享.webp",
-    "filePath": "國字認字卡/101-200/118_享.webp",
+    "filePath": "國字認字卡/101-150/118_享.webp",
     "vocab": [
       "分享",
       "享受",
@@ -1539,7 +1539,7 @@ const CARDS_DATA = [
     "id": 119,
     "char": "受",
     "fileName": "119_受.webp",
-    "filePath": "國字認字卡/101-200/119_受.webp",
+    "filePath": "國字認字卡/101-150/119_受.webp",
     "vocab": [
       "接受",
       "難受",
@@ -1552,13 +1552,403 @@ const CARDS_DATA = [
     "id": 120,
     "char": "亡",
     "fileName": "120_亡.webp",
-    "filePath": "國字認字卡/101-200/120_亡.webp",
+    "filePath": "國字認字卡/101-150/120_亡.webp",
     "vocab": [
       "逃亡",
       "滅亡",
       "死亡",
       "亡羊補牢",
       "傷亡"
+    ]
+  },
+  {
+    "id": 121,
+    "char": "盲",
+    "fileName": "121_盲.webp",
+    "filePath": "國字認字卡/101-150/121_盲.webp",
+    "vocab": [
+      "盲人",
+      "盲人點字",
+      "導盲犬",
+      "盲目",
+      "盲從"
+    ]
+  },
+  {
+    "id": 122,
+    "char": "爭",
+    "fileName": "122_爭.webp",
+    "filePath": "國字認字卡/101-150/122_爭.webp",
+    "vocab": [
+      "爭吵",
+      "爭取",
+      "爭第一",
+      "爭先恐後",
+      "競爭"
+    ]
+  },
+  {
+    "id": 123,
+    "char": "串",
+    "fileName": "123_串.webp",
+    "filePath": "國字認字卡/101-150/123_串.webp",
+    "vocab": [
+      "串門子",
+      "肉串",
+      "羊肉串",
+      "串起來",
+      "一串香蕉"
+    ]
+  },
+  {
+    "id": 124,
+    "char": "隹",
+    "fileName": "124_隹.webp",
+    "filePath": "國字認字卡/101-150/124_隹.webp",
+    "vocab": [
+      "隹部",
+      "小鳥(隹)",
+      "隹字旁",
+      "隹亥",
+      "青隹"
+    ]
+  },
+  {
+    "id": 125,
+    "char": "焦",
+    "fileName": "125_焦.webp",
+    "filePath": "國字認字卡/101-150/125_焦.webp",
+    "vocab": [
+      "燒焦",
+      "焦急",
+      "焦點",
+      "焦炭",
+      "烤焦"
+    ]
+  },
+  {
+    "id": 126,
+    "char": "瞧",
+    "fileName": "126_瞧.webp",
+    "filePath": "國字認字卡/101-150/126_瞧.webp",
+    "vocab": [
+      "瞧一瞧",
+      "瞧不起",
+      "瞧瞧",
+      "看瞧",
+      "瞧見"
+    ]
+  },
+  {
+    "id": 127,
+    "char": "睜",
+    "fileName": "127_睜.webp",
+    "filePath": "國字認字卡/101-150/127_睜.webp",
+    "vocab": [
+      "睜開眼",
+      "睜眼",
+      "睜大眼睛",
+      "睜開",
+      "睜一眼閉一眼"
+    ]
+  },
+  {
+    "id": 128,
+    "char": "淚",
+    "fileName": "128_淚.webp",
+    "filePath": "國字認字卡/101-150/128_淚.webp",
+    "vocab": [
+      "眼淚",
+      "流眼淚",
+      "淚水",
+      "淚汪汪",
+      "流淚"
+    ]
+  },
+  {
+    "id": 129,
+    "char": "肩",
+    "fileName": "129_肩.webp",
+    "filePath": "國字認字卡/101-150/129_肩.webp",
+    "vocab": [
+      "肩膀",
+      "肩膀痛",
+      "肩膀酸",
+      "肩負",
+      "肩並肩"
+    ]
+  },
+  {
+    "id": 130,
+    "char": "生",
+    "fileName": "130_生.webp",
+    "filePath": "國字認字卡/101-150/130_生.webp",
+    "vocab": [
+      "生日",
+      "生日卡",
+      "生活",
+      "生氣",
+      "花生"
+    ]
+  },
+  {
+    "id": 131,
+    "char": "元",
+    "fileName": "131_元.webp",
+    "filePath": "國字認字卡/101-150/131_元.webp",
+    "vocab": [
+      "一元",
+      "十元",
+      "元旦",
+      "公元",
+      "單元"
+    ]
+  },
+  {
+    "id": 132,
+    "char": "玩",
+    "fileName": "132_玩.webp",
+    "filePath": "國字認字卡/101-150/132_玩.webp",
+    "vocab": [
+      "玩玩具",
+      "好玩",
+      "玩耍",
+      "玩具店",
+      "玩家"
+    ]
+  },
+  {
+    "id": 133,
+    "char": "班",
+    "fileName": "133_班.webp",
+    "filePath": "國字認字卡/101-150/133_班.webp",
+    "vocab": [
+      "班級",
+      "上班",
+      "下班",
+      "班長",
+      "值班"
+    ]
+  },
+  {
+    "id": 134,
+    "char": "理",
+    "fileName": "134_理.webp",
+    "filePath": "國字認字卡/101-150/134_理.webp",
+    "vocab": [
+      "道理",
+      "整理",
+      "理解",
+      "修理",
+      "理髮"
+    ]
+  },
+  {
+    "id": 135,
+    "char": "求",
+    "fileName": "135_求.webp",
+    "filePath": "國字認字卡/101-150/135_求.webp",
+    "vocab": [
+      "求求你",
+      "要求",
+      "請求",
+      "尋求",
+      "求生"
+    ]
+  },
+  {
+    "id": 136,
+    "char": "知",
+    "fileName": "136_知.webp",
+    "filePath": "國字認字卡/101-150/136_知.webp",
+    "vocab": [
+      "知道",
+      "知識",
+      "通知",
+      "求知",
+      "知己"
+    ]
+  },
+  {
+    "id": 137,
+    "char": "球",
+    "fileName": "137_球.webp",
+    "filePath": "國字認字卡/101-150/137_球.webp",
+    "vocab": [
+      "皮球",
+      "地球",
+      "氣球",
+      "足球",
+      "羽毛球"
+    ]
+  },
+  {
+    "id": 138,
+    "char": "白",
+    "fileName": "138_白.webp",
+    "filePath": "國字認字卡/101-150/138_白.webp",
+    "vocab": [
+      "白色",
+      "白雲",
+      "白天",
+      "白兔",
+      "白紙"
+    ]
+  },
+  {
+    "id": 139,
+    "char": "皇",
+    "fileName": "139_皇.webp",
+    "filePath": "國字認字卡/101-150/139_皇.webp",
+    "vocab": [
+      "皇帝",
+      "皇家",
+      "皇后",
+      "皇冠",
+      "皇宮"
+    ]
+  },
+  {
+    "id": 140,
+    "char": "全",
+    "fileName": "140_全.webp",
+    "filePath": "國字認字卡/101-150/140_全.webp",
+    "vocab": [
+      "全部",
+      "全身",
+      "安全",
+      "全家人",
+      "全國"
+    ]
+  },
+  {
+    "id": 141,
+    "char": "朱",
+    "fileName": "141_朱.webp",
+    "filePath": "國字認字卡/101-150/141_朱.webp",
+    "vocab": [
+      "朱紅色",
+      "朱古力",
+      "朱砂",
+      "朱門",
+      "朱雀"
+    ]
+  },
+  {
+    "id": 142,
+    "char": "珠",
+    "fileName": "142_珠.webp",
+    "filePath": "國字認字卡/101-150/142_珠.webp",
+    "vocab": [
+      "珍珠",
+      "珠寶",
+      "淚珠",
+      "水珠",
+      "算盤珠"
+    ]
+  },
+  {
+    "id": 143,
+    "char": "皮",
+    "fileName": "143_皮.webp",
+    "filePath": "國字認字卡/101-150/143_皮.webp",
+    "vocab": [
+      "皮膚",
+      "皮球",
+      "果皮",
+      "香蕉皮",
+      "皮鞋"
+    ]
+  },
+  {
+    "id": 144,
+    "char": "玻",
+    "fileName": "144_玻.webp",
+    "filePath": "國字認字卡/101-150/144_玻.webp",
+    "vocab": [
+      "玻璃",
+      "玻璃杯",
+      "玻璃窗",
+      "玻璃瓶",
+      "玻璃鞋"
+    ]
+  },
+  {
+    "id": 145,
+    "char": "凶",
+    "fileName": "145_凶.webp",
+    "filePath": "國字認字卡/101-150/145_凶.webp",
+    "vocab": [
+      "凶猛",
+      "凶惡",
+      "凶巴巴",
+      "吉凶",
+      "凶手"
+    ]
+  },
+  {
+    "id": 146,
+    "char": "璃",
+    "fileName": "146_璃.webp",
+    "filePath": "國字認字卡/101-150/146_璃.webp",
+    "vocab": [
+      "玻璃",
+      "玻璃杯",
+      "玻璃瓶",
+      "玻璃窗",
+      "琉璃"
+    ]
+  },
+  {
+    "id": 147,
+    "char": "早",
+    "fileName": "147_早.webp",
+    "filePath": "國字認字卡/101-150/147_早.webp",
+    "vocab": [
+      "早上",
+      "早安",
+      "早起",
+      "早餐",
+      "早退"
+    ]
+  },
+  {
+    "id": 148,
+    "char": "晶",
+    "fileName": "148_晶.webp",
+    "filePath": "國字認字卡/101-150/148_晶.webp",
+    "vocab": [
+      "亮晶晶",
+      "晶瑩",
+      "水晶",
+      "晶片",
+      "晶瑩剔透"
+    ]
+  },
+  {
+    "id": 149,
+    "char": "晴",
+    "fileName": "149_晴.webp",
+    "filePath": "國字認字卡/101-150/149_晴.webp",
+    "vocab": [
+      "晴天",
+      "晴空",
+      "雨過天晴",
+      "放晴",
+      "大晴天"
+    ]
+  },
+  {
+    "id": 150,
+    "char": "星",
+    "fileName": "150_星.webp",
+    "filePath": "國字認字卡/101-150/150_星.webp",
+    "vocab": [
+      "星星",
+      "星期天",
+      "星期六",
+      "星空",
+      "流星"
     ]
   }
 ];
